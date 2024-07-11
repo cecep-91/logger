@@ -88,9 +88,9 @@ class Logging():
                             }
                         }
                     )
-                    if len(bulk_data) >= 20:
+                    if len(bulk_data) >= 100:
                         self.index_elastic(es, index_name, bulk_data)
-                        ids = [i.get("id", "") for i in bulk_data]
+                        ids = [i.get("_source", {}).get("id", "") for i in bulk_data]
                         bulk_data = []
                         print(f"[{time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())}] id {ids} pushed to index {index_name}")
                     
